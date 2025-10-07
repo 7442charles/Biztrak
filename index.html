@@ -279,6 +279,102 @@
                 </div>
             </main>
 
+            <div id="demo-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-gray-900 bg-opacity-75 backdrop-blur-sm transition-opacity">
+                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <div class="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-background-light p-6 text-left shadow-2xl transition-all dark:bg-gray-800 dark:border dark:border-primary/20 sm:my-8 sm:p-8">
+                        <div class="absolute top-4 right-4">
+                            <button
+                                type="button"
+                                id="close-modal-button"
+                                class="rounded-full bg-background-light p-2 text-gray-400 hover:text-gray-500 dark:bg-gray-800 dark:text-gray-300 dark:hover:text-white"
+                                aria-label="Close modal"
+                            >
+                                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="mt-2 text-center sm:mt-0 sm:text-left">
+                            <h3 class="text-2xl font-bold leading-6 text-gray-900 dark:text-white" id="modal-title">
+                                Request a Live Demo 
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    Fill out the form below, and our team will be in touch shortly to schedule your personalized demo of BIZTRAK POS.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <form class="mt-6 space-y-5">
+                            <div>
+                                <label for="modal-name" class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    Your Name
+                                </label>
+                                <input
+                                    id="modal-name"
+                                    name="name"
+                                    type="text"
+                                    required
+                                    class="mt-1 block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:focus:border-primary dark:focus:ring-primary"
+                                />
+                            </div>
+
+                            <div>
+                                <label for="modal-business-name" class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    Store / Business Name
+                                </label>
+                                <input
+                                    id="modal-business-name"
+                                    name="business_name"
+                                    type="text"
+                                    required
+                                    class="mt-1 block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:focus:border-primary dark:focus:ring-primary"
+                                />
+                            </div>
+
+                            <div>
+                                <label for="modal-email" class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    Email Address
+                                </label>
+                                <input
+                                    id="modal-email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    class="mt-1 block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:focus:border-primary dark:focus:ring-primary"
+                                />
+                            </div>
+
+                            <div>
+                                <label for="modal-phone" class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                                    Phone Number
+                                </label>
+                                <input
+                                    id="modal-phone"
+                                    name="phone"
+                                    type="tel"
+                                    required
+                                    class="mt-1 block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:focus:border-primary dark:focus:ring-primary"
+                                />
+                            </div>
+
+                            <div class="pt-2">
+                                <button
+                                    type="submit"
+                                    class="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-gray-900 text-base font-bold shadow-md transition-transform hover:scale-105"
+                                >
+                                    <span class="truncate">Schedule My Demo</span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+
             <footer class="bg-background-light dark:bg-background-dark border-t border-primary/20 dark:border-primary/10">
                 <div class="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
                     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -291,7 +387,48 @@
                     </div>
                 </div>
             </footer>
-            </div>
+        </div>
     </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const modal = document.getElementById('demo-modal');
+                const closeModalButton = document.getElementById('close-modal-button');
+                // Select all buttons with 'Request Demo' text or the primary class for consistency
+                const openModalButtons = document.querySelectorAll(
+                    'button:has(span[class*="truncate"]):not(#menu-button)' // Targets buttons with a truncate span that are not the mobile menu
+                ); 
+
+                const toggleModal = () => {
+                    modal.classList.toggle('hidden');
+                };
+
+                // Open Modal Listeners (for all Request Demo buttons)
+                openModalButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        modal.classList.remove('hidden');
+                    });
+                });
+
+                // Close Modal Listeners
+                closeModalButton.addEventListener('click', toggleModal);
+
+                // Close modal when clicking outside of it (the backdrop)
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        toggleModal();
+                    }
+                });
+
+                // Close modal when pressing the ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                        toggleModal();
+                    }
+                });
+            });
+        </script>
+
 </body>
 </html>
